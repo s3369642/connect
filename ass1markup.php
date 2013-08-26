@@ -2,15 +2,15 @@
 <html>
 
 <head>
-
 <?php include 'utility.php'; ?>
+<script src="javascript.js"></script>
 </head>
 
 <body>
 <p><span id="noValuesError" style="color:red; display:none">Please enter one or more field values</span></p>
 
 <table>
-<col width="30%"
+
 <tr>
 
 <td>
@@ -53,13 +53,16 @@ From: <select form="wineSearch" id="from" name="from">
 <?php
 printDropDown(returnRow("SELECT DISTINCT year FROM wine order by year;", $dbconn));
 ?>
-</select><br/>
+</select>
+<br/>
 
 To: <select form="wineSearch" id="to" name="to">
 <?php
 printDropDown(returnRow("SELECT DISTINCT year FROM wine order by year;", $dbconn));
 ?>
-</select><br/>
+</select>
+<div id="fromToError" style="color:red; display:none">Your 'To' selection must be after your 'From' selection</div>
+<br/>
 <br/>
 
 Number in Stock:<br/>
@@ -69,6 +72,7 @@ Min: <input type="number" id="minStock">
 Max: <input type="number" id="maxStock">
 <div id="maxStockError" style="color:red; display:none">Invalid number</div>
 <br/>
+<div id="minMaxStockError" style="color:red; display:none">Your minimum cannot be greater than your maximum</div>
 <br/>
 Price Range<br/>
 Min: <input type="number" id="minPrice" name="min">
@@ -77,8 +81,9 @@ Min: <input type="number" id="minPrice" name="min">
 Max: <input type="number" id="maxPrice" name="max">
 <div id="maxPriceError" style="color:red; display:none">Invalid number</div>
 <br/>
+<div id="minMaxPriceError" style="color:red; display:none">Your minimum cannot be greater than your maximum</div>
 
-<!-- flag used by $_GET to tell if the form is submitted-->
+<!-- flag used to tell if the form is submitted-->
 <input type='hidden' id="submitted" name='submitted' value="0" />
 <br/>
 <input type="button" value="Search" onclick="validateSubmit();">
