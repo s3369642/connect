@@ -124,7 +124,7 @@ function searchQuery($dbconn){
 	//Join all queries into a single query
 
 	$query = $query.join($queryInputs, " and ")." order by wine.wine_id;";
-	echo $query;
+	//echo $query;
 	return $query;
 }
 
