@@ -94,7 +94,9 @@ if(maxPriceJs.length > 0){
  
 
 if(fieldsPopulated == 1){
-        
+
+	document.getElementById("noValuesError").style.display="none";        
+
         if(valid == 1){
                 document.getElementById("submitted").value = "1";
                 document.getElementById("wineSearch").submit();

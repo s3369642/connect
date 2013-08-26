@@ -27,18 +27,21 @@ function returnRow($query, $dbconn){
         }
 
 
-function printDropDown($result){
-	echo "<option value=\"--Select--\" selected>--Select--</option><br/>";
+function returnDropDown($result){
+	$output = "";
+	$output = $output."<option value=\"--Select--\" selected>--Select--</option><br/>";
 	foreach($result as $resultRow){
-		echo "<option value=".$resultRow[0].">".$resultRow[0]."</option><br/>";
+		$output = $output."<option value=".$resultRow[0].">".$resultRow[0]."</option><br/>";
 		}
+	return $output;
 	}
 
-function printTable($dbconn){
+function returnTable($dbconn){
+	$output = "";
 	$result = returnArray(searchQuery($dbconn), $dbconn);
 
 	if($result != null){
-		echo "<table border \"1\">".
+		$output = $output."<table border \"1\">".
 		"<tr>".
 		"<td>Name</td>".
 		"<td>Year</td>".
@@ -49,7 +52,7 @@ function printTable($dbconn){
 		"<td>Cost</td>".
 		"</tr>";
 		foreach($result as $resultRow){
-			echo "<tr>".
+			$output = $output."<tr>".
 				"<td>".$resultRow['wine_name']."</td>".
 				"<td>".$resultRow['year']."</td>".
 				"<td>".$resultRow['winery_name']."</td>".
@@ -59,8 +62,9 @@ function printTable($dbconn){
 				"<td>$".$resultRow['cost']."</td>".
 				"</tr>";
 		}	
-		echo "</table>";
+		$output = $output."</table>";
 	}
+	return $output;
 }
 
 
@@ -124,7 +128,7 @@ function searchQuery($dbconn){
 	//Join all queries into a single query
 
 	$query = $query.join($queryInputs, " and ")." order by wine.wine_id;";
-	echo $query;
+	//echo $query;
 	return $query;
 }
 
