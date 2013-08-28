@@ -27,14 +27,14 @@ Winery Name: <input type="text" id="wineryName" name="wineryName">
 <br/>
 
 Region: <br/>
-<select form="wineSearch" multiple size="10" id = "region" name="region">
+<select form="wineSearch" size="10" id = "region" name="region">
 ${regionSelect}
 </select>
 <br/>
 <br/>
 
 Grape: <br/>
-<select form="wineSearch" multiple size="10" id="grape" name="grape">
+<select form="wineSearch" size="10" id="grape" name="grape">
 ${grapeSelect}
 </select>
 <br/>  
