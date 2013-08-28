@@ -87,21 +87,11 @@ function searchQuery($dbconn){
         	}
 
 	 if($_GET['region'] != "--Select--"){
-		$allRegions = [];
-		foreach($_GET['region'] as $regionOption){
-                	array_push($allRegions, "region_name like \"".$regionOption."%\"");
-                	}
-		$allRegionsText = "(".join($allRegions, " or ").")";
-		array_push($queryInputs, $allRegionsText);	
+		array_push($queryInputs, "region_name like \"".$_GET['region']."%\"");
 		}	
 
 	if($_GET['grape'] != "--Select--"){
-                $allGrapes = [];
-                foreach($_GET['grape'] as $grapeOption){
-                        array_push($allGrapes, "variety like \"".$grapeOption."%\"");
-                        }
-                $allGrapesText = "(".join($allGrapes, " or ").")";
-                array_push($queryInputs, $allGrapesText);
+                array_push($queryInputs, "variety like \"".$_GET['grape']."%\"");
                 }
 
 	if($_GET['from'] != "--Select--"){
