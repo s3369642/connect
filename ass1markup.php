@@ -26,7 +26,7 @@ Winery name: <input type="text" id="wineryName" name="wineryName">
 <br/>
 
 Region:<br/>
-<select form="wineSearch" multiple size="10" id = "region" name="region">
+<select form="wineSearch" size="10" id = "region" name="region">
 <?php 
 printDropDown(
 	returnRow("SELECT region_name FROM region;", $dbconn)
@@ -37,7 +37,7 @@ printDropDown(
 <br/>
 
 Grape Variety:<br/>
-<select form="wineSearch" multiple size="10" id="grape" name="grape">
+<select form="wineSearch" size="10" id="grape" name="grape">
 <?php
 printDropDown(
 	returnRow("SELECT DISTINCT variety FROM grape_variety order by variety;", $dbconn)
