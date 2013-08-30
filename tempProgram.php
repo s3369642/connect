@@ -37,18 +37,6 @@ if(isset($_GET['submitted']) && $_GET['submitted']==1){
 
 $t->addBlock ("results");
 
-//Session variable - needs to be returned AFTER the query has been done
-if(isset($_SESSION['wines'])){
-        $wineDisplay = $_SESSION['wines'].
-                " wines have been viewed in this session.";
-        }
-        else{$wineDisplay = "Session not started yet";}
-
-$t->setVariable("wineDisplay", $wineDisplay);
-
-$t->addBlock("session");
-
-
 $t->generateOutput(); 
 
 ?>

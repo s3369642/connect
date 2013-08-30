@@ -1,8 +1,3 @@
-function startSession(){
-	document.getElementById("sessionStarted").value = "1";
-	document.getElementById("sessionForm").submit();
-	}
-
 function validateSubmit(){
 var namePatt=/[a-zA-Z0-9]+/;
 var numberPatt=/[0-9]+/;

@@ -13,16 +13,6 @@
 <tr>
 
 <td>
-<!-- $BeginBlock session -->
-${wineDisplay}
-<form id="sessionForm" method="get" action="${formAction}">
-	<input type="hidden" id = "sessionStarted" name="sessionStarted" value="0">
-	<input type="button" value="Start Session" onclick="startSession();">
-</form>
-<!-- $EndBlock session -->
-</td>
-
-<td>
 <form id="wineSearch" method="get" action="${formAction}">
 
 <!-- $BeginBlock form -->

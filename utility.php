@@ -4,22 +4,6 @@ session_start();
 
 require_once 'myPdo.php';
 
-//Session button and functions
-
-if(isset($_GET['sessionStarted']) && $_GET['sessionStarted'] == 1){
-        startSession();
-        }
-
-function startSession(){
-	$_SESSION['wines'] = 0;
-	}
-
-function addToSession($querySize){
-	if(isset($_SESSION['wines'])){
-		$_SESSION['wines'] += $querySize; 
-		}
-	}
-
 function returnArray($query, $dbconn){
 	$output = [];
 	if($result = $dbconn->query($query)){
@@ -45,8 +29,6 @@ function returnTable($dbconn){
 	$result = returnArray(searchQuery($dbconn), $dbconn);
 
 	if($result != null){
-	
-		addToSession(sizeof($result));
 	
 		//Display results
 		$output = $output."<table border \"1\">".
