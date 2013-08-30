@@ -1,5 +1,9 @@
-function validateSubmit(){
+function startSession(){
+	document.getElementById("sessionStarted").value = "1";
+	document.getElementById("sessionForm").submit();
+	}
 
+function validateSubmit(){
 var namePatt=/[a-zA-Z0-9]+/;
 var numberPatt=/[0-9]+/;
 var valid = 1;
@@ -94,7 +98,9 @@ if(maxPriceJs.length > 0){
  
 
 if(fieldsPopulated == 1){
-        
+
+	document.getElementById("noValuesError").style.display="none";        
+
         if(valid == 1){
                 document.getElementById("submitted").value = "1";
                 document.getElementById("wineSearch").submit();

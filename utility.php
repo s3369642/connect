@@ -1,44 +1,55 @@
 <?php
 
-include 'connect.php';
+session_start();
+
+require_once 'myPdo.php';
+
+//Session button and functions
+
+if(isset($_GET['sessionStarted']) && $_GET['sessionStarted'] == 1){
+        startSession();
+        }
+
+function startSession(){
+	$_SESSION['wines'] = 0;
+	}
+
+function addToSession($querySize){
+	if(isset($_SESSION['wines'])){
+		$_SESSION['wines'] += $querySize; 
+		}
+	}
 
 function returnArray($query, $dbconn){
 	$output = [];
-	if($result = mysql_query($query, $dbconn)){
-	while($row = mysql_fetch_array($result, MYSQL_ASSOC)){
-		
-		array_push($output, $row);
+	if($result = $dbconn->query($query)){
+
+		$output = $result->fetchAll();
+		return $output;
 		}
-	return $output;
-	}
+
 	else echo "None found";
 	}
 
-function returnRow($query, $dbconn){
-        $output = [];
-        if($result = mysql_query($query, $dbconn)){
-        while($row = mysql_fetch_row($result)){
-                
-                array_push($output, $row);
-                }
-        return $output;
-        }
-        else echo "None found";
-        }
-
-
-function printDropDown($result){
-	echo "<option value=\"--Select--\" selected>--Select--</option><br/>";
+function returnDropDown($result){
+	$output = "";
+	$output = $output."<option value=\"--Select--\" selected>--Select--</option><br/>";
 	foreach($result as $resultRow){
-		echo "<option value=".$resultRow[0].">".$resultRow[0]."</option><br/>";
+		$output = $output."<option value=".$resultRow[0].">".$resultRow[0]."</option><br/>";
 		}
+	return $output;
 	}
 
-function printTable($dbconn){
+function returnTable($dbconn){
+	$output = "";
 	$result = returnArray(searchQuery($dbconn), $dbconn);
 
 	if($result != null){
-		echo "<table border \"1\">".
+	
+		addToSession(sizeof($result));
+	
+		//Display results
+		$output = $output."<table border \"1\">".
 		"<tr>".
 		"<td>Name</td>".
 		"<td>Year</td>".
@@ -49,7 +60,7 @@ function printTable($dbconn){
 		"<td>Cost</td>".
 		"</tr>";
 		foreach($result as $resultRow){
-			echo "<tr>".
+			$output = $output."<tr>".
 				"<td>".$resultRow['wine_name']."</td>".
 				"<td>".$resultRow['year']."</td>".
 				"<td>".$resultRow['winery_name']."</td>".
@@ -59,8 +70,9 @@ function printTable($dbconn){
 				"<td>$".$resultRow['cost']."</td>".
 				"</tr>";
 		}	
-		echo "</table>";
+		$output = $output."</table>";
 	}
+	return $output;
 }
 
 
@@ -87,21 +99,11 @@ function searchQuery($dbconn){
         	}
 
 	 if($_GET['region'] != "--Select--"){
-		$allRegions = [];
-		foreach($_GET['region'] as $regionOption){
-                	array_push($allRegions, "region_name like \"".$regionOption."%\"");
-                	}
-		$allRegionsText = "(".join($allRegions, " or ").")";
-		array_push($queryInputs, $allRegionsText);	
-		}	
+		array_push($queryInputs, "region_name like \"".$_GET['region']."%\"");	
+		}
 
 	if($_GET['grape'] != "--Select--"){
-                $allGrapes = [];
-                foreach($_GET['grape'] as $grapeOption){
-                        array_push($allGrapes, "variety like \"".$grapeOption."%\"");
-                        }
-                $allGrapesText = "(".join($allGrapes, " or ").")";
-                array_push($queryInputs, $allGrapesText);
+                array_push($queryInputs, "variety like \"".$_GET['grape']."%\"");
                 }
 
 	if($_GET['from'] != "--Select--"){
@@ -124,7 +126,7 @@ function searchQuery($dbconn){
 	//Join all queries into a single query
 
 	$query = $query.join($queryInputs, " and ")." order by wine.wine_id;";
-	//echo $query;
+	
 	return $query;
 }
 
