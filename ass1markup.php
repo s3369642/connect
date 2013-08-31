@@ -2,7 +2,6 @@
 <html>
 
 <head>
-<?php include 'utility.php'; ?>
 <script src="javascript.js"></script>
 </head>
 
@@ -14,71 +13,71 @@
 <tr>
 
 <td>
-<form id="wineSearch" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<!-- $BeginBlock session -->
+${wineDisplay}
+<form id="sessionForm" method="get" action="${formAction}">
+	<input type="hidden" id = "sessionStarted" name="sessionStarted" value="0">
+	<input type="button" value="Start Session" onclick="startSession();">
+</form>
+<!-- $EndBlock session -->
+</td>
 
-Wine name: <input type="text" id="wineName" name="wineName">
+<td>
+<form id="wineSearch" method="get" action="${formAction}">
+
+<!-- $BeginBlock form -->
+Wine Name: 
+<input type="text" id="wineName" name="wineName">
 <div id="wineError" style="color:red; display:none">Invalid Entry</div>
 <br/>
 <br/>
-Winery name: <input type="text" id="wineryName" name="wineryName">
+Winery Name: <input type="text" id="wineryName" name="wineryName">
 <div id="wineryError" style="color:red; display:none">Invalid Entry</div>
 <br/>
 <br/>
 
-Region:<br/>
-<select form="wineSearch" multiple size="10" id = "region" name="region">
-<?php 
-printDropDown(
-	returnRow("SELECT region_name FROM region;", $dbconn)
-);
-?>
+Region: <br/>
+<select form="wineSearch" size="10" id = "region" name="region">
+${regionSelect}
 </select>
 <br/>
 <br/>
 
-Grape Variety:<br/>
-<select form="wineSearch" multiple size="10" id="grape" name="grape">
-<?php
-printDropDown(
-	returnRow("SELECT DISTINCT variety FROM grape_variety order by variety;", $dbconn)
-);
-?>
+Grape: <br/>
+<select form="wineSearch" size="10" id="grape" name="grape">
+${grapeSelect}
 </select>
 <br/>  
 <br/>
 
-Dating<br/>
+Dating...<br/>
 
 From: <select form="wineSearch" id="from" name="from">
-<?php
-printDropDown(returnRow("SELECT DISTINCT year FROM wine order by year;", $dbconn));
-?>
+${fromSelect}
 </select>
 <br/>
 
 To: <select form="wineSearch" id="to" name="to">
-<?php
-printDropDown(returnRow("SELECT DISTINCT year FROM wine order by year;", $dbconn));
-?>
+${toSelect}
 </select>
 <div id="fromToError" style="color:red; display:none">Your 'To' selection must be after your 'From' selection</div>
 <br/>
 <br/>
 
-Number in Stock:<br/>
-Min: <input type="number" id="minStock">
+Number in Stock<br/>
+Minimum: <input type="number" id="minStock">
 <div id="minStockError" style="color:red; display:none">Invalid number</div>
 <br/>
-Max: <input type="number" id="maxStock">
+Maximum: <input type="number" id="maxStock">
 <div id="maxStockError" style="color:red; display:none">Invalid number</div>
 <br/>
 <div id="minMaxStockError" style="color:red; display:none">Your minimum cannot be greater than your maximum</div>
 <br/>
 Price Range<br/>
-Min: <input type="number" id="minPrice" name="min">
+Minimum<input type="number" id="minPrice" name="min">
 <div id="minPriceError" style="color:red; display:none">Invalid number</div>
 <br/>
-Max: <input type="number" id="maxPrice" name="max">
+Maximum<input type="number" id="maxPrice" name="max">
 <div id="maxPriceError" style="color:red; display:none">Invalid number</div>
 <br/>
 <div id="minMaxPriceError" style="color:red; display:none">Your minimum cannot be greater than your maximum</div>
@@ -88,15 +87,15 @@ Max: <input type="number" id="maxPrice" name="max">
 <br/>
 <input type="button" value="Search" onclick="validateSubmit();">
 
+<!-- $EndBlock form -->
+
 </form>
 </td>
 
 <td>
-<?php
-if(isset($_GET['submitted']) && $_GET['submitted']=="1"){
-	printTable($dbconn);
-	}
-?>
+<!-- $BeginBlock results -->
+${searchResults}
+<!-- $EndBlock results -->
 </td>
 
 </tr>
