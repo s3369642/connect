@@ -1,6 +1,24 @@
 <?php
 
-include 'connect.php';
+session_start();
+
+require_once 'myPdo.php';
+
+//Session button and functions
+
+if(isset($_GET['sessionStarted']) && $_GET['sessionStarted'] == 1){
+        startSession();
+        }
+
+function startSession(){
+        $_SESSION['wines'] = 0;
+        }
+
+function addToSession($querySize){
+        if(isset($_SESSION['wines'])){
+                $_SESSION['wines'] += $querySize;
+                }
+        }
 
 function returnArray($query, $dbconn){
 	$output = [];
@@ -14,18 +32,6 @@ function returnArray($query, $dbconn){
 	else echo "None found";
 	}
 
-function returnRow($query, $dbconn){
-        $output = [];
-        if($result = mysql_query($query, $dbconn)){
-        while($row = mysql_fetch_row($result)){
-                
-                array_push($output, $row);
-                }
-        return $output;
-        }
-        else echo "None found";
-        }
-
 
 function printDropDown($result){
 	echo "<option value=\"--Select--\" selected>--Select--</option><br/>";
@@ -38,6 +44,9 @@ function printTable($dbconn){
 	$result = returnArray(searchQuery($dbconn), $dbconn);
 
 	if($result != null){
+		
+		addToSession(sizeof($result));
+		
 		echo "<table border \"1\">".
 		"<tr>".
 		"<td>Name</td>".
